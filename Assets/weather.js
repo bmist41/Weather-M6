@@ -2,9 +2,10 @@ const savedLocations = document.getElementById('saved-locations');
 const weatherInfo = document.getElementById('weather-info');
 const searchInput = document.getElementById('search-input');
 const searchButton = document.getElementById('search-button');
+const forcastInfo = document.getElementById('forcast-info')
 const apiKey = 'fbfabaa44a03e64601217a89aacf9fa6'
 
-const locations = ['New York', 'London', 'Paris', 'Tokyo'];
+const locations = ['New York', 'San Francisco', 'Atlanta', 'Denver'];
 
 async function getLatLon(cityName) {
     const geoUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=1&appid=${apiKey}`;
@@ -28,7 +29,7 @@ async function fetchWeather(lat, lon) {
         const response = await fetch(weatherUrl);
         const data = await response.json();
         if (response.ok) {
-            const weather = data.list[0]; // Retrieve the first forecast item
+            const weather = data.list[0]; 
             weatherInfo.innerHTML = `
                 <h2>Weather in ${data.city.name}</h2>
                 <p>Temperature: ${weather.main.temp}°F</p>
@@ -41,6 +42,26 @@ async function fetchWeather(lat, lon) {
         weatherInfo.innerHTML = `<p>Error fetching weather data.</p>`;
     }
 }
+
+async function fetchForcast(lat, lon){
+    const forcastURL = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}&units=imperial`;
+    try {
+        const forcastResponse = await fetch(forcastURL)
+        const data = await forcastResponse.json();
+        if (response.ok){
+            const forcast = data.list[0];
+            forcastInfo.innerHTML = `
+                <h2> Five Day Forcast in ${data.city.name} </h2>
+                <p> ${forcast.main.temp} </p>
+            `
+        } else {
+                forcastInfo.innerHTML = `<p>Error: ${data.message}</p>`;
+        }
+    } catch (error) {
+        forcastInfo.innerHTML = `<p>Error Fetching Forcast data</p>`
+    }
+}
+
 
 async function displayWeather(cityName) {
     const coords = await getLatLon(cityName);
@@ -64,12 +85,12 @@ function populateSavedLocations() {
 searchButton.addEventListener('click', async () => {
     const cityName = searchInput.value.trim();
     if (cityName && !locations.includes(cityName)) {
-        locations.push(cityName); // Add new location to list
+        locations.push(cityName); 
         populateSavedLocations();
     }
-    await displayWeather(cityName); // Display weather for the searched location
+    await displayWeather(cityName);
 });
 
-populateSavedLocations(); // Initialize the saved locations list
+populateSavedLocations(); 
 
         

@@ -85,14 +85,11 @@ function fetchForecast(lat, lon) {
 
                 const forecastHtml = Object.keys(forecastsByDay).slice(0, 5).map((day) => {
                     const dailyForecasts = forecastsByDay[day];
-
-                
                     const highTemp = Math.max(...dailyForecasts.map(f => f.main.temp));
                     const lowTemp = Math.min(...dailyForecasts.map(f => f.main.temp));
 
-                
                     return `
-                        <div class="forecast-card">
+                        <div class="forecast-cards">
                             <h3>${day}</h3>
                             <p>High: ${highTemp.toFixed(1)}°F</p>
                             <p>Low: ${lowTemp.toFixed(1)}°F</p>

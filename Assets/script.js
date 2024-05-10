@@ -42,8 +42,9 @@ function displayCurrentWeather(data) {
 
 function displayForecast(data) {
     forecastSection.innerHTML = ''; 
-    for (let i = 0; i < 5; i++) { 
-        const forecast = data.list[i];
+    const forecastPerDay = data.list.filter((forecast, index) => index % 8 === 4); 
+
+    forecastPerDay.forEach(forecast => {
         const iconCode = forecast.weather[0].icon;
         const iconUrl = `http://openweathermap.org/img/wn/${iconCode}.png`;
         const date = new Date(forecast.dt * 1000).toLocaleDateString();
@@ -55,12 +56,12 @@ function displayForecast(data) {
             <div class="forecast-card">
                 <h3>${date}</h3>
                 <img src="${iconUrl}" alt="Weather Icon">
-                <p>Temperature: ${temperature}°F</p>
+                <p>Temperature: ${temperature}°C</p>
                 <p>Humidity: ${humidity}%</p>
-                <p>Wind Speed: ${windSpeed} mph</p>
+                <p>Wind Speed: ${windSpeed} m/s</p>
             </div>
         `;
-    }
+    });
 }
 
 function addToSearchHistory(city) {

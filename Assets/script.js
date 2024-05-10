@@ -34,7 +34,7 @@ function displayCurrentWeather(data) {
     currentWeatherSection.innerHTML = `
         <h2>${data.name}</h2>
         <p>Date: ${new Date().toLocaleDateString()}</p>
-        <p>Temperature: ${data.main.temp}F</p>
+        <p>Temperature: ${data.main.temp}°F</p>
         <p>Humidity: ${data.main.humidity}%</p>
         <p>Wind Speed: ${data.wind.speed} mph</p>
     `;
@@ -56,9 +56,9 @@ function displayForecast(data) {
             <div class="forecast-card">
                 <h3>${date}</h3>
                 <img src="${iconUrl}" alt="Weather Icon">
-                <p>Temperature: ${temperature}°C</p>
+                <p>Temperature: ${temperature}°F</p>
                 <p>Humidity: ${humidity}%</p>
-                <p>Wind Speed: ${windSpeed} m/s</p>
+                <p>Wind Speed: ${windSpeed} mph</p>
             </div>
         `;
     });
